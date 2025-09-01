@@ -6,8 +6,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class B {
     public static void main(String[] args) {
-        newData data=new newData();
-        new Thread(()->{
+        newData data = new newData();
+        new Thread(() -> {
             for (int i = 0; i < 20; i++) {
                 try {
                     data.increase();
@@ -15,8 +15,8 @@ public class B {
                     throw new RuntimeException(e);
                 }
             }
-        },"A").start();
-        new Thread(()->{
+        }, "A").start();
+        new Thread(() -> {
             for (int i = 0; i < 20; i++) {
                 try {
                     data.decrease();
@@ -24,9 +24,9 @@ public class B {
                     throw new RuntimeException(e);
                 }
             }
-        },"B").start();
+        }, "B").start();
 
-        new Thread(()->{
+        new Thread(() -> {
             for (int i = 0; i < 20; i++) {
                 try {
                     data.increase();
@@ -34,9 +34,9 @@ public class B {
                     throw new RuntimeException(e);
                 }
             }
-        },"C").start();
+        }, "C").start();
 
-        new Thread(()->{
+        new Thread(() -> {
             for (int i = 0; i < 20; i++) {
                 try {
                     data.decrease();
@@ -44,18 +44,19 @@ public class B {
                     throw new RuntimeException(e);
                 }
             }
-        },"D").start();
+        }, "D").start();
 
     }
 
 
 }
 
-class newData{
-   final Lock lock=new ReentrantLock();
-   final Condition notFull= lock.newCondition();
-   final Condition notEmpty=lock.newCondition();
-    private int number=0;
+class newData {
+    final Lock lock = new ReentrantLock();
+    final Condition notFull = lock.newCondition();
+    final Condition notEmpty = lock.newCondition();
+    private int number = 0;
+
     public void increase() throws InterruptedException {
         lock.lock();
         try {
@@ -63,9 +64,9 @@ class newData{
                 notFull.await();
             }
             number++;
-            System.out.println(Thread.currentThread().getName()+"=>"+number);
+            System.out.println(Thread.currentThread().getName() + "=>" + number);
             notEmpty.signalAll();
-        }finally {
+        } finally {
             lock.unlock();
         }
     }
@@ -77,9 +78,9 @@ class newData{
                 notEmpty.await();
             }
             number--;
-            System.out.println(Thread.currentThread().getName()+"=>"+number);
+            System.out.println(Thread.currentThread().getName() + "=>" + number);
             notFull.signalAll();
-        }finally {
+        } finally {
             lock.unlock();
         }
     }
