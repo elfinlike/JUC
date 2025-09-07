@@ -5,12 +5,6 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.stream.LongStream;
 
-/**
- * Description：
- *
- * @author jiaoqianjin
- * Date: 2020/8/13 8:43
- **/
 
 public class ForkJoinTest {
     private static final long SUM = 20_0000_0000;
