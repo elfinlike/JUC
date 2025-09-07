@@ -11,8 +11,14 @@ public class CASDemo {
          * 如果期望的值达到了，那么就更新，否则不更新
          * CAS,是CPU的并发原语；
          */
+        // 捣乱的线程
         System.out.println(num.compareAndSet(0, 2));
         System.out.println(num.get());
+
+        System.out.println(num.compareAndSet(2, 0));
+        System.out.println(num.get());
+
+        //期望的线程
         System.out.println(num.compareAndSet(0, 1));
         System.out.println(num.get());
 
